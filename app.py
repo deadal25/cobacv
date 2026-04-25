@@ -90,6 +90,11 @@ def style_header(df):
         'text-align': 'center !important'
     })
 
+def get_base64_image(image_path):
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+    
+img_base64 = get_base64_image("assets/logokalla.png")
 # ======================
 # CONFIG
 # ======================
@@ -281,7 +286,7 @@ st.markdown(f"""
             height: 80px;
             margin-right: 25px;
         ">
-            <img src="https://cdn-icons-png.flaticon.com/512/3222/3222625.png" width="50">
+            <img src="data:image/png;base64,{img_base64}" width="50">
         </div>
 
         <div style="flex-grow: 1;">
