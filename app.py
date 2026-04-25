@@ -27,6 +27,20 @@ def build_job_components(row):
 
 job_parts = df.apply(build_job_components, axis=1).tolist()
 
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# 2. Path gambar Anda (Gunakan 'r' di depan string agar backslash tidak error)
+img_path = r"C:/Users/USER/Videos/SKRIPSI/tes1/Logo Kalla Aspal_Full Color.png"
+
+try:
+    img_base64 = get_base64_of_bin_file(img_path)
+except FileNotFoundError:
+    st.error("Logo tidak ditemukan. Pastikan path gambar sudah benar.")
+    img_base64 = ""
+
 # ======================
 # SAVE FUNCTION
 # ======================
@@ -259,6 +273,12 @@ button[kind="primary"]:hover {
 # ======================
 # ENHANCED PREMIUM HEADER
 # ======================
+# URL Gambar Eksternal yang Anda berikan
+logo_url = "https://arest.web.id/sites/default/files/styles/foto_company_singlepost/public/logo-kalla-aspal.png?itok=W2nyLQ3Q"
+
+# ======================
+# ✨ PREMIUM HEADER
+# ======================
 st.markdown(f"""
     <div style="
         background: linear-gradient(135deg, #ffffff 0%, #f0f7f4 100%);
@@ -282,34 +302,33 @@ st.markdown(f"""
             height: 80px;
             margin-right: 25px;
         ">
-            st.image("logokalla.png", width=65)
+            <img src="{logo_url}" width="65" style="object-fit: contain;">
         </div>
+
         <div style="flex-grow: 1;">
             <div style="display: flex; align-items: center; gap: 12px;">
-                <h1 style="
-                    margin: 0; 
-                    color: #0B5334; 
-                    font-size: 36px; 
-                    font-weight: 850; 
-                    letter-spacing: -1px;
-                    line-height: 1;
-                ">
+                <h1 style="margin: 0; color: #0B5334; font-size: 36px; font-weight: 850; letter-spacing: -1px; line-height: 1;">
                     Dashboard Penilaian CV
                 </h1>
+                <span style="background: #0B5334; color: white; padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase;">
+                    v2.0 PRO
+                </span>
             </div>
-            <p style="
-                margin: 8px 0 0 0; 
-                color: #555; 
-                font-size: 18px; 
-                font-weight: 400;
-            ">
+            <p style="margin: 8px 0 0 0; color: #555; font-size: 18px; font-weight: 400;">
                 Sistem Pendukung Keputusan Seleksi Karyawan <span style="color: #0B5334; font-weight: 700;">Kalla Aspal</span> 
                 berbasis <i style="color: #28A745;">Sentence-BERT Semantic Matching</i>
             </p>
         </div>
+        
         <div style="text-align: right; border-left: 1px solid #ddd; padding-left: 25px; margin-left: 25px;">
+            <div style="color: #0B5334; font-weight: 800; font-size: 14px;">STATUS SISTEM</div>
+            <div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 4px;">
+                <div style="width: 10px; height: 10px; background: #28A745; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                <span style="color: #28A745; font-weight: 600; font-size: 14px;">AI Model Online</span>
+            </div>
         </div>
     </div>
+
     <style>
     @keyframes pulse {{
         0% {{ box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }}
