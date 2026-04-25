@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import urllib.parse
 import altair as alt
+import base64
 
 from utils.model import load_model
 from utils.pdf_extractor import extract_text_from_pdf
@@ -25,6 +26,20 @@ def build_job_components(row):
     }
 
 job_parts = df.apply(build_job_components, axis=1).tolist()
+
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# 2. Path gambar Anda (Gunakan 'r' di depan string agar backslash tidak error)
+img_path = r"C:/Users/USER/Videos/SKRIPSI/tes1/Logo Kalla Aspal_Full Color.png"
+
+try:
+    img_base64 = get_base64_of_bin_file(img_path)
+except FileNotFoundError:
+    st.error("Logo tidak ditemukan. Pastikan path gambar sudah benar.")
+    img_base64 = ""
 
 # ======================
 # SAVE FUNCTION
@@ -244,6 +259,8 @@ button[kind="primary"]:hover {
 [data-testid="stSidebar"] .stTextInput {
     margin-bottom: -20px !important;
 }
+.block-container {
+            padding-top: 1.5rem !important;            
 </style>
 """, unsafe_allow_html=True)
 
@@ -251,6 +268,72 @@ button[kind="primary"]:hover {
 # MENU
 # ======================
 # menu = st.radio("", ["Single CV", "Leaderboard"], horizontal=True)
+
+# Membuat layout kolom untuk logo dan teks judul
+# ======================
+# ENHANCED PREMIUM HEADER
+# ======================
+st.markdown(f"""
+    <div style="
+        background: linear-gradient(135deg, #ffffff 0%, #f0f7f4 100%);
+        padding: 25px;
+        border-radius: 20px;
+        border-left: 8px solid #0B5334;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+    ">
+        <div style="
+            background: white; 
+            padding: 10px; 
+            border-radius: 18px; 
+            box-shadow: 0 8px 15px rgba(11, 83, 52, 0.1);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            min-width: 80px;
+            height: 80px;
+            margin-right: 25px;
+        ">
+            <img src="data:image/png;base64,{img_base64}" width="60">
+        </div>
+        <div style="flex-grow: 1;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <h1 style="
+                    margin: 0; 
+                    color: #0B5334; 
+                    font-size: 36px; 
+                    font-weight: 850; 
+                    letter-spacing: -1px;
+                    line-height: 1;
+                ">
+                    Dashboard Penilaian CV
+                </h1>
+            </div>
+            <p style="
+                margin: 8px 0 0 0; 
+                color: #555; 
+                font-size: 18px; 
+                font-weight: 400;
+            ">
+                Sistem Pendukung Keputusan Seleksi Karyawan <span style="color: #0B5334; font-weight: 700;">Kalla Aspal</span> 
+                berbasis <i style="color: #28A745;">Sentence-BERT Semantic Matching</i>
+            </p>
+        </div>
+        <div style="text-align: right; border-left: 1px solid #ddd; padding-left: 25px; margin-left: 25px;">
+        </div>
+    </div>
+    <style>
+    @keyframes pulse {{
+        0% {{ box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }}
+        70% {{ box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }}
+        100% {{ box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }}
+    }}
+    </style>
+""", unsafe_allow_html=True)
+
+
 # --- LOGIKA NAVIGASI TAB ---
 if 'menu' not in st.session_state:
     st.session_state.menu = "Single CV"
@@ -361,10 +444,10 @@ if menu == "Single CV":
             st.markdown(f"""
             <div class="custom-card">
                 <p style="color: gray; font-weight: bold; margin-bottom:20px;">Detail Penilaian</p>
-                <p style="margin-bottom:4px; font-size:16px; color: #444;">💼 Pengalaman <span style="float:right; font-weight:bold;">{exp_score:.1f}%</span></p>
-                <div class="custom-progress" style="margin-bottom:15px;"><div class="progress-fill" style="width:{exp_score}%;"></div></div>
                 <p style="margin-bottom:4px; font-size:16px; color: #444;">🎓 Pendidikan <span style="float:right; font-weight:bold;">{edu_score:.1f}%</span></p>
                 <div class="custom-progress" style="margin-bottom:15px;"><div class="progress-fill" style="width:{edu_score}%;"></div></div>
+                <p style="margin-bottom:4px; font-size:16px; color: #444;">💼 Pengalaman <span style="float:right; font-weight:bold;">{exp_score:.1f}%</span></p>
+                <div class="custom-progress" style="margin-bottom:15px;"><div class="progress-fill" style="width:{exp_score}%;"></div></div>
                 <p style="margin-bottom:4px; font-size:16px; color: #444;">⭐ Kemampuan <span style="float:right; font-weight:bold;">{skill_score:.1f}%</span></p>
                 <div class="custom-progress"><div class="progress-fill" style="width:{skill_score}%;"></div></div>
             </div>
@@ -458,7 +541,48 @@ if menu == "Single CV":
         st.success(f"✅ Berhasil menyimpan Top 5 posisi terbaik untuk {nama}!")
 
     elif not file:
-        st.info("👋 Silakan upload file CV di sidebar untuk memulai analisis CV.")
+    # --- Tampilan Welcome / Tutorial ---
+        st.markdown("### 🚀 Selamat Datang di Dashboard Penilaian CV")
+        st.write("Aplikasi ini membantu Anda menyeleksi kandidat terbaik menggunakan AI dengan cepat dan akurat. Berikut adalah panduan fitur utamanya:")
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown("""
+            <div style="background-color: #f0f7f4; padding: 20px; border-radius: 10px; border-left: 5px solid #0B5334; height: 100%;">
+                <h4 style="color: #0B5334; margin-top:0;">📄 Single CV</h4>
+                <p style="font-size: 14px; color: #444;">
+                    Gunakan untuk menganalisis <b>satu kandidat secara mendalam</b>. 
+                    Anda akan mendapatkan skor kecocokan, feedback mendetail, dan perbandingan spesifik terhadap posisi yang dilamar.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with col2:
+            st.markdown("""
+            <div style="background-color: #fdfaf0; padding: 20px; border-radius: 10px; border-left: 5px solid #f39c12; height: 100%;">
+                <h4 style="color: #f39c12; margin-top:0;">🏆 Leaderboard</h4>
+                <p style="font-size: 14px; color: #444;">
+                    Halaman <b>peringkat</b>. Semua CV yang telah Anda upload akan muncul di sini secara terurut dari skor tertinggi. 
+                    Memudahkan Anda menentukan siapa yang layak lanjut ke tahap interview.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with col3:
+            st.markdown("""
+            <div style="background-color: #f0f4f7; padding: 20px; border-radius: 10px; border-left: 5px solid #2980b9; height: 100%;">
+                <h4 style="color: #2980b9; margin-top:0;">📁 Bulk CV</h4>
+                <p style="font-size: 14px; color: #444;">
+                    Punya puluhan file? Fitur ini memungkinkan Anda <b>upload banyak file PDF sekaligus</b>. 
+                    Sistem akan memproses semuanya secara otomatis dalam satu waktu (Batch Processing).
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown(" ", unsafe_allow_html=True)
+
+        st.info("👈 **Mulai Sekarang:** Silakan pilih posisi pekerjaan dan upload file CV Anda melalui sidebar di sebelah kiri.")
 # LEADERBOARD
 # =========================================================
 elif menu == "Leaderboard":
@@ -612,7 +736,7 @@ elif menu == "Bulk CV":
             st.session_state.bulk_mode = "Auto"
 
         # --- TOMBOL MODE (Auto / Manual) ---
-        st.write("Mode Analisis:")
+        st.markdown("<p style='font-size:13px; font-weight:bold; margin-bottom:5px; color:#444;'>Mode Analisis:</p>", unsafe_allow_html=True)
         col_mode1, col_mode2 = st.columns(2)
         
         with col_mode1:
@@ -647,10 +771,10 @@ elif menu == "Bulk CV":
             selected_job = st.selectbox("", df['job_title'], key="job_manual")
             
         # File Uploader
-        file = st.file_uploader(
+        files = st.file_uploader(
             "Upload banyak file CV (PDF)",
             type="pdf",
-            accept_multiple_file=True,
+            accept_multiple_files=True,
             key=st.session_state.uploader_key
         )
 
@@ -664,20 +788,20 @@ elif menu == "Bulk CV":
             st.rerun()
 
         # --- KARTU RINGKASAN ---
-        if file:
+        if files:
             st.markdown(f"""
             <div class="sidebar-stats-card">
                 <p style="color: #0B5334; font-weight: bold; margin-bottom: 5px;">Total CV diupload</p>
-                <h2 style="color: #0B5334; margin-top: -20px;">{len(file)} <small style="font-size: 14px; color: gray;">File</small></h2>
+                <h2 style="color: #0B5334; margin-top: -20px;">{len(files)} <small style="font-size: 14px; color: gray;">File</small></h2>
             </div>
             """, unsafe_allow_html=True)
 
     # --- LOGIC PROSES ---
     # --- LOGIC PROSES ---
-    if file and process_btn:
+    if files and process_btn:
         results = []
         with st.spinner("⏳ Menganalisis semua CV..."):
-            for f in file:
+            for f in files:
                 text = extract_text_from_pdf(f)
                 cv = parse_cv_structured(text)
                 df_sim = compute_similarity(cv, job_parts, model, df)
@@ -834,5 +958,5 @@ elif menu == "Bulk CV":
 
         st.success(f"✅ Berhasil memproses {len(df_res)} CV!")
 
-    elif not file:
+    elif not files:
         st.info("👋 Silakan upload beberapa file CV di sidebar untuk memulai analisis Bulk.")
