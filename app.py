@@ -255,13 +255,6 @@ button[kind="primary"]:hover {
 # ======================
 # menu = st.radio("", ["Single CV", "Leaderboard"], horizontal=True)
 
-# Membuat layout kolom untuk logo dan teks judul
-# ======================
-# ENHANCED PREMIUM HEADER
-# ======================
-# URL Gambar Eksternal yang Anda berikan
-logo_url = "https://raw.githubusercontent.com/USERNAME/REPO/main/cobacv/logokalla.png"
-
 # ======================
 # ✨ PREMIUM HEADER
 # ======================
@@ -288,7 +281,7 @@ st.markdown(f"""
             height: 80px;
             margin-right: 25px;
         ">
-            <img src="{logo_url}" width="65" style="object-fit: contain;">
+            <img src="https://cdn-icons-png.flaticon.com/512/3222/3222625.png" width="50">
         </div>
 
         <div style="flex-grow: 1;">
