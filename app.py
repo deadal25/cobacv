@@ -93,8 +93,11 @@ def style_header(df):
 def get_base64_image(image_path):
     with open(image_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
-    
-img_base64 = get_base64_image("assets/logokalla.png")
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+img_path = os.path.join(BASE_DIR, "assets", "logokalla.png")
+
+img_base64 = get_base64_image(img_path)
 # ======================
 # CONFIG
 # ======================
