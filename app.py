@@ -32,19 +32,15 @@ def get_base64_of_bin_file(bin_file):
         data = f.read()
     return base64.b64encode(data).decode()
 
-# 🔥 Ambil path absolut (anti error)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-img_path = os.path.join(BASE_DIR, "cobacv", "logokalla.png")
-
-# 🔍 Debug (opsional, bisa hapus nanti)
-st.write("Path:", img_path)
-st.write("File ada?", os.path.exists(img_path))
+# 2. Path gambar Anda (Gunakan 'r' di depan string agar backslash tidak error)
+img_path = r"C:/Users/USER/Videos/SKRIPSI/cobacv/logokalla.png"
 
 try:
     img_base64 = get_base64_of_bin_file(img_path)
-except Exception as e:
-    st.error(f"Logo tidak ditemukan / error: {e}")
+except FileNotFoundError:
+    st.error("Logo tidak ditemukan. Pastikan path gambar sudah benar.")
     img_base64 = ""
+
 # ======================
 # SAVE FUNCTION
 # ======================
