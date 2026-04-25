@@ -89,15 +89,6 @@ def style_header(df):
         'border-color': '#f0f0f0',
         'text-align': 'center !important'
     })
-
-def get_base64_image(image_path):
-    with open(image_path, "rb") as f:
-        return base64.b64encode(f.read()).decode()
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-img_path = os.path.join(BASE_DIR, "assets", "logokalla.png")
-
-img_base64 = get_base64_image(img_path)
 # ======================
 # CONFIG
 # ======================
@@ -277,21 +268,6 @@ st.markdown(f"""
         display: flex;
         align-items: center;
     ">
-        <div style="
-            background: white; 
-            padding: 10px; 
-            border-radius: 18px; 
-            box-shadow: 0 8px 15px rgba(11, 83, 52, 0.1);
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            min-width: 80px;
-            height: 80px;
-            margin-right: 25px;
-        ">
-            <img src="data:image/png;base64,{img_base64}" width="50">
-        </div>
-
         <div style="flex-grow: 1;">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <h1 style="margin: 0; color: #0B5334; font-size: 36px; font-weight: 850; letter-spacing: -1px; line-height: 1;">
