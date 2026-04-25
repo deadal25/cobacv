@@ -3,7 +3,6 @@ import pandas as pd
 import os
 import urllib.parse
 import altair as alt
-import base64
 
 from utils.model import load_model
 from utils.pdf_extractor import extract_text_from_pdf
@@ -255,9 +254,9 @@ button[kind="primary"]:hover {
 # menu = st.radio("", ["Single CV", "Leaderboard"], horizontal=True)
 
 # ======================
-# ✨ PREMIUM HEADER
+# ✨ PREMIUM HEADER (FIXED STRUCTURE)
 # ======================
-st.markdown(f"""
+st.markdown("""
     <div style="
         background: linear-gradient(135deg, #ffffff 0%, #f0f7f4 100%);
         padding: 25px;
@@ -268,7 +267,6 @@ st.markdown(f"""
         display: flex;
         align-items: center;
     ">
-        </div>
         <div style="flex-grow: 1;">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <h1 style="margin: 0; color: #0B5334; font-size: 36px; font-weight: 850; letter-spacing: -1px; line-height: 1;">
@@ -287,21 +285,27 @@ st.markdown(f"""
         <div style="text-align: right; border-left: 1px solid #ddd; padding-left: 25px; margin-left: 25px;">
             <div style="color: #0B5334; font-weight: 800; font-size: 14px;">STATUS SISTEM</div>
             <div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 4px;">
-                <div style="width: 10px; height: 10px; background: #28A745; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                <div class="pulse-dot"></div>
                 <span style="color: #28A745; font-weight: 600; font-size: 14px;">AI Model Online</span>
             </div>
         </div>
     </div>
 
     <style>
-    @keyframes pulse {{
-        0% {{ box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }}
-        70% {{ box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }}
-        100% {{ box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }}
-    }}
+    .pulse-dot {
+        width: 10px;
+        height: 10px;
+        background: #28A745;
+        border-radius: 50%;
+        animation: pulse-kf 2s infinite;
+    }
+    @keyframes pulse-kf {
+        0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+    }
     </style>
 """, unsafe_allow_html=True)
-
 
 # --- LOGIKA NAVIGASI TAB ---
 if 'menu' not in st.session_state:
