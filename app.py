@@ -260,7 +260,7 @@ button[kind="primary"]:hover {
 # ENHANCED PREMIUM HEADER
 # ======================
 # URL Gambar Eksternal yang Anda berikan
-logo_url = "https://arest.web.id/sites/default/files/styles/foto_company_singlepost/public/logo-kalla-aspal.png?itok=W2nyLQ3Q"
+logo_url = "https://raw.githubusercontent.com/USERNAME/REPO/main/cobacv/logokalla.png"
 
 # ======================
 # ✨ PREMIUM HEADER
