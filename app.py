@@ -33,7 +33,7 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 # 2. Path gambar Anda (Gunakan 'r' di depan string agar backslash tidak error)
-img_path = r"/cobacv/logokalla.png"
+img_path = "cobacv/logokalla.png"
 
 try:
     img_base64 = get_base64_of_bin_file(img_path)
