@@ -27,20 +27,6 @@ def build_job_components(row):
 
 job_parts = df.apply(build_job_components, axis=1).tolist()
 
-def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-# 2. Path gambar Anda (Gunakan 'r' di depan string agar backslash tidak error)
-img_path = r"C:/Users/USER/Videos/SKRIPSI/tes1/Logo Kalla Aspal_Full Color.png"
-
-try:
-    img_base64 = get_base64_of_bin_file(img_path)
-except FileNotFoundError:
-    st.error("Logo tidak ditemukan. Pastikan path gambar sudah benar.")
-    img_base64 = ""
-
 # ======================
 # SAVE FUNCTION
 # ======================
