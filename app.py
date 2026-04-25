@@ -27,12 +27,24 @@ def build_job_components(row):
 
 job_parts = df.apply(build_job_components, axis=1).tolist()
 
-def get_base64_image(image_path):
-    with open(image_path, "rb") as img:
-        return base64.b64encode(img.read()).decode()
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
 
-img_base64 = get_base64_image("cobacv/logokalla.png")
+# 🔥 Ambil path absolut (anti error)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+img_path = os.path.join(BASE_DIR, "cobacv", "logokalla.png")
 
+# 🔍 Debug (opsional, bisa hapus nanti)
+st.write("Path:", img_path)
+st.write("File ada?", os.path.exists(img_path))
+
+try:
+    img_base64 = get_base64_of_bin_file(img_path)
+except Exception as e:
+    st.error(f"Logo tidak ditemukan / error: {e}")
+    img_base64 = ""
 # ======================
 # SAVE FUNCTION
 # ======================
