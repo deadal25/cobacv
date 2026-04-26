@@ -252,59 +252,39 @@ button[kind="primary"]:hover {
 # MENU
 # ======================
 # menu = st.radio("", ["Single CV", "Leaderboard"], horizontal=True)
-
-# ======================
-# ✨ PREMIUM HEADER (FIXED STRUCTURE)
-# ======================
 st.markdown("""
     <div style="
-        background: linear-gradient(135deg, #ffffff 0%, #f0f7f4 100%);
-        padding: 25px;
-        border-radius: 20px;
-        border-left: 8px solid #0B5334;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 6px solid #0B5334;
+        margin-bottom: 20px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
     ">
-        <div style="flex-grow: 1;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <h1 style="margin: 0; color: #0B5334; font-size: 36px; font-weight: 850; letter-spacing: -1px; line-height: 1;">
-                    Dashboard Penilaian CV
-                </h1>
-                <span style="background: #0B5334; color: white; padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase;">
-                    v2.0 PRO
-                </span>
-            </div>
-            <p style="margin: 8px 0 0 0; color: #555; font-size: 18px; font-weight: 400;">
-                Sistem Pendukung Keputusan Seleksi Karyawan <span style="color: #0B5334; font-weight: 700;">Kalla Aspal</span> 
-                berbasis <i style="color: #28A745;">Sentence-BERT Semantic Matching</i>
+        <div>
+            <h1 style="
+                margin: 0;
+                color: #0B5334;
+                font-size: 30px;
+                font-weight: 800;
+            ">
+                Dashboard Penilaian CV
+            </h1>
+            <p style="
+                margin: 6px 0 0 0;
+                color: #555;
+                font-size: 15px;
+            ">
+                Sistem ini membantu proses seleksi kandidat dengan membandingkan isi CV 
+                terhadap kebutuhan posisi di <span style="color: #0B5334; font-weight: 600;">Kalla Aspal</span> secara lebih terstruktur. 
+                Hasil analisis ditampilkan dalam bentuk skor, ranking, dan Rekomendasi Job/Posisi yang paling terbaik 
+                berbasis <i>Sentence-BERT</i>
             </p>
         </div>
         
-        <div style="text-align: right; border-left: 1px solid #ddd; padding-left: 25px; margin-left: 25px;">
-            <div style="color: #0B5334; font-weight: 800; font-size: 14px;">STATUS SISTEM</div>
-            <div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 4px;">
-                <div class="pulse-dot"></div>
-                <span style="color: #28A745; font-weight: 600; font-size: 14px;">AI Model Online</span>
-            </div>
-        </div>
     </div>
-
-    <style>
-    .pulse-dot {
-        width: 10px;
-        height: 10px;
-        background: #28A745;
-        border-radius: 50%;
-        animation: pulse-kf 2s infinite;
-    }
-    @keyframes pulse-kf {
-        0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
-        70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
-    }
-    </style>
 """, unsafe_allow_html=True)
 
 # --- LOGIKA NAVIGASI TAB ---
@@ -338,7 +318,7 @@ menu = st.session_state.menu
 # =========================================================
 if menu == "Single CV":
     with st.sidebar:
-        st.markdown('<p class="main-title">📥 Input Data Pelamar</p>', unsafe_allow_html=True)
+        st.markdown('<p class="main-title">📥 Input Data Kandidat</p>', unsafe_allow_html=True)
         
         # --- SEKSI INFORMASI DASAR ---
         st.markdown("""
@@ -525,8 +505,9 @@ if menu == "Single CV":
             <div style="background-color: #f0f7f4; padding: 20px; border-radius: 10px; border-left: 5px solid #0B5334; height: 100%;">
                 <h4 style="color: #0B5334; margin-top:0;">📄 Single CV</h4>
                 <p style="font-size: 14px; color: #444;">
-                    Gunakan untuk menganalisis <b>satu kandidat secara mendalam</b>. 
-                    Anda akan mendapatkan skor kecocokan, feedback mendetail, dan perbandingan spesifik terhadap posisi yang dilamar.
+                    <b>Single CV</b> digunakan untuk menganalisis <b>satu kandidat secara lebih detail</b>. 
+                    Fitur ini menampilkan skor kecocokan CV dengan posisi yang dilamar, 
+                    serta memberikan rekomendasi job yang lain. Cocok digunakan ketika ingin mengevaluasi satu kandidat secara lebih fokus.
                 </p>
             </div>
             """, unsafe_allow_html=True)
@@ -536,8 +517,10 @@ if menu == "Single CV":
             <div style="background-color: #fdfaf0; padding: 20px; border-radius: 10px; border-left: 5px solid #f39c12; height: 100%;">
                 <h4 style="color: #f39c12; margin-top:0;">🏆 Leaderboard</h4>
                 <p style="font-size: 14px; color: #444;">
-                    Halaman <b>peringkat</b>. Semua CV yang telah Anda upload akan muncul di sini secara terurut dari skor tertinggi. 
-                    Memudahkan Anda menentukan siapa yang layak lanjut ke tahap interview.
+                    <b>Leaderboard</b> merupakan halaman <b>peringkat kandidat berdasarkan skor</b>. 
+                    Semua CV yang sudah dianalisis akan ditampilkan secara terurut dari yang tertinggi, 
+                    serta memudahkan HR dalam membandingkan performa masing-masing kandidat. 
+                    Cocok digunakan untuk membantu proses seleksi secara lebih cepat.
                 </p>
             </div>
             """, unsafe_allow_html=True)
@@ -547,15 +530,18 @@ if menu == "Single CV":
             <div style="background-color: #f0f4f7; padding: 20px; border-radius: 10px; border-left: 5px solid #2980b9; height: 100%;">
                 <h4 style="color: #2980b9; margin-top:0;">📁 Bulk CV</h4>
                 <p style="font-size: 14px; color: #444;">
-                    Punya puluhan file? Fitur ini memungkinkan Anda <b>upload banyak file PDF sekaligus</b>. 
-                    Sistem akan memproses semuanya secara otomatis dalam satu waktu (Batch Processing).
+                    <b>Bulk CV</b> digunakan untuk menangani <b>banyak file CV sekaligus</b>. 
+                    Anda dapat mengunggah beberapa file dalam satu waktu tanpa harus satu per satu, 
+                    lalu sistem akan memproses dan menampilkan skor CV secara otomatis, serta memberikan Rekomendasi job yang paling Terbaik.
+                    Cocok digunakan saat menghadapi jumlah pelamar yang cukup banyak.
                 </p>
             </div>
             """, unsafe_allow_html=True)
+        
+        st.markdown(" ", unsafe_allow_html=True)
 
-            st.markdown(" ", unsafe_allow_html=True)
-
-        st.info("👈 **Mulai Sekarang:** Silakan pilih posisi pekerjaan dan upload file CV Anda melalui sidebar di sebelah kiri.")
+            
+    st.info("👈 **Mulai Sekarang:** Silakan pilih posisi pekerjaan dan upload file CV Anda melalui sidebar di sebelah kiri.")
 # LEADERBOARD
 # =========================================================
 elif menu == "Leaderboard":
@@ -701,7 +687,7 @@ elif menu == "Bulk CV":
     # --- SIDEBAR BULK INPUT ---
     # --- SIDEBAR BULK INPUT (VERSI TOMBOL BIASA) ---
     with st.sidebar:
-        st.markdown('<p class="main-title">📥 Upload CV</p>', unsafe_allow_html=True)
+        st.markdown('<p class="main-title">📥 Upload CV Kandidat</p>', unsafe_allow_html=True)
         
         if "uploader_key" not in st.session_state:
             st.session_state.uploader_key = 0
